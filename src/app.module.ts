@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Student } from './studentsAuth/entities';
 import { AdminModule } from './admin/admin.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { AdminModule } from './admin/admin.module';
     DoctorAuthModule,
     EmailModule,
     AdminModule,
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
