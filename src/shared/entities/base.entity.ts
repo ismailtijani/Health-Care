@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ApiHideProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import {
-  Column,
-  CreateDateColumn,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Injectable()
 export class BaseEntity {
@@ -42,9 +37,12 @@ export class BaseEntity {
   @Exclude()
   resetPasswordToken: string;
 
-  @CreateDateColumn()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  // @CreateDateColumn()
+  // createdAt: Date;
+
+  // @UpdateDateColumn()
+  // updatedAt: Date;
 }

@@ -15,10 +15,10 @@ import { AdminModule } from './admin/admin.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'production'
-          ? './env/prod.env'
-          : './env/dev.env',
+      envFilePath: './env/prod.env',
+      // process.env.NODE_ENV === 'production'
+      //   ? './env/prod.env'
+      //   : './env/dev.env',
     }),
 
     TypeOrmModule.forRootAsync({
@@ -33,7 +33,7 @@ import { AdminModule } from './admin/admin.module';
         database: configService.get<string>('DATABASE_NAME'),
         entities: [Student],
         synchronize: true,
-        dropSchema: true,
+        // dropSchema: true,
       }),
     }),
     StudentsModule,
