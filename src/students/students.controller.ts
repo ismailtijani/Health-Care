@@ -14,7 +14,9 @@ import { UpdateStudentDto } from '../studentsAuth/dto/update-student.dto';
 import { StudentService } from './students.service';
 import { JwtGuard } from 'src/shared/guards';
 import { Request } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Student')
 @Controller('student')
 @UseGuards(JwtGuard)
 export class StudentController {

@@ -14,12 +14,14 @@ import { StudentAuthService } from './student-auth.service';
 import { CreateStudentDto } from 'src/studentsAuth/dto';
 import {
   ApiBadRequestResponse,
+  ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { JwtGuard } from 'src/shared/guards';
 import { Request } from 'express';
 
+@ApiTags('StudentAuth')
 @Controller('auth/student')
 @UseInterceptors(ClassSerializerInterceptor)
 export class StudentAuthController {

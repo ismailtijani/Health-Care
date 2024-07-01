@@ -2,7 +2,9 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { DoctorAuthService } from './doctor-auth.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { LoginDto } from 'src/shared/dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('DoctorAuth')
 @Controller('auth/doctor')
 export class DoctorAuthController {
   constructor(private readonly doctorAuthService: DoctorAuthService) {}
