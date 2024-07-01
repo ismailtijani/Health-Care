@@ -1,7 +1,8 @@
 import { UserType } from 'src/shared/constants';
 import { BaseEntity } from 'src/shared/entities';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Appointment } from 'src/appointments/entities/appointment.entity';
 
 @Entity('student')
 export class Student extends BaseEntity {
@@ -16,6 +17,9 @@ export class Student extends BaseEntity {
 
   @Column({ type: 'enum', enum: UserType, default: UserType.Student })
   userType: UserType;
+
+  @OneToMany(() => Appointment, (appointment) => appointment.student)
+  appointments: Appointment[];
 
   //Hashing User plain text password before saving using Entity Listener
   @BeforeInsert()

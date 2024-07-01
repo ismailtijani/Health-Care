@@ -1,18 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAppointmentDto } from './dto/create-appointment.dto';
-import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
+import { Appointment } from './entities';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AppoinmentStatus } from 'src/shared/constants';
+import { CreateAppointmentDto, RescheduleAppointmentDto } from './dto';
 
 @Injectable()
 export class AppointmentsService {
-  create(createAppointmentDto: CreateAppointmentDto) {
-    return 'This action adds a new appointment';
+  constructor(
+    @InjectRepository(Appointment)
+    private appointmentRepository: Repository<Appointment>,
+  ) {}
+
+  async create(
+    createAppointmentDto: CreateAppointmentDto,
+  ): Promise<Appointment> {
+    const appointment = this.appointmentRepository.create(createAppointmentDto);
+    return this.appointmentRepository.save(appointment);
   }
 
-  reschedule(id: number, newAppointmentDetails: RescheduleAppointmentDto) {
-    return `This action updates a #${id} appointment`;
+  async reschedule(
+    id: number,
+    newAppointmentDetails: RescheduleAppointmentDto,
+  ): Promise<Appointment> {
+    const { newAppointmentDate, time } = newAppointmentDetails;
+    const appointment = await this.appointmentRepository.findOneBy({ id });
+    appointment.appointmentDate = newAppointmentDate;
+    appointment.time = time;
+    appointment.status = AppoinmentStatus.RESCHEDULED;
+    return this.appointmentRepository.save(appointment);
   }
 
-  cancel(id: number) {
-    return `This action removes a #${id} appointment`;
+  async cancel(id: number): Promise<Appointment> {
+    const appointment = await this.appointmentRepository.findOneBy({ id });
+    appointment.status = AppoinmentStatus.CANCELLED;
+    return this.appointmentRepository.save(appointment);
   }
 }

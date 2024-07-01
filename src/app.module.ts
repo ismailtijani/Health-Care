@@ -11,6 +11,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Student } from './studentsAuth/entities';
 import { AdminModule } from './admin/admin.module';
 import { AppointmentsModule } from './appointments/appointments.module';
+import { DoctorEntity } from './doctorsAuth/entities/doctor.entity';
+import { Appointment } from './appointments/entities';
 
 @Module({
   imports: [
@@ -33,7 +35,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
         username: configService.get<string>('DATABASE_USERNAME'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [Student],
+        entities: [Student, DoctorEntity, Appointment],
         synchronize: true,
         // dropSchema: true,
       }),

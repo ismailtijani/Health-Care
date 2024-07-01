@@ -10,6 +10,34 @@ export enum StatusType {
   INACTIVE = 'inactive',
 }
 
+export enum AppoinmentStatus {
+  SCHEDULED = 'scheduled',
+  RESCHEDULED = 'rescheduled',
+  CANCELLED = 'cancelled',
+  COMPLETED = 'completed',
+}
+
+export enum DoctorSpecialization {
+  CARDIOLOGY = 'Cardiology',
+  DERMATOLOGY = 'Dermatology',
+  DENTISTRY = 'Dentistry',
+  NEUROLOGY = 'Neurology',
+  SURGERY = 'Surgery',
+  UROLOGY = 'Urology',
+  ORTHOPEDICS = 'Orthopedics',
+  GYNECOLOGY = 'Gynecology',
+  // Endocrinology,
+  // Gastroenterology,
+  // Hematology,
+  // Nephrology,
+  // Oncology,
+  // Ophthalmology,
+  // Otolaryngology,
+  // Pulmonology,
+  // Radiology,
+  // Rheumatology,
+}
+
 export class Tokens {
   /** example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJwcmluY2Vpc21haWwwOTVAZ21haWwuY29tIiwiaWF0IjoxNzEwMDg4MjczLCJleHAiOjE3MTAwODkxNzN9._VW8yfKhQWrVtD0JErygC0ly007QMiFefunupllXW9Y */
   accessToken: string;

@@ -36,7 +36,7 @@ export class StudentController {
   /** API Endpoint for retrieving Student information by ID. */
   @Get(':id')
   getStudent(@Param('id') id: string) {
-    return this.studentsService.findOne(+id);
+    return this.studentsService.getStudent(+id);
   }
 
   /** API Endpoint for updating Student information.
@@ -47,12 +47,18 @@ export class StudentController {
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
   ) {
-    return this.studentsService.update(+id, updateStudentDto);
+    return this.studentsService.updateStudent(+id, updateStudentDto);
+  }
+
+  /** API Endpoint for updating Student information. */
+  @Patch(':id')
+  deactivateStudent(@Param('id') id: string) {
+    return this.studentsService.deactivateStudent(+id);
   }
 
   /** API Endpoint for deactivating Student account. */
   @Delete(':id')
-  deactivateStudent(@Param('id') id: string) {
-    return this.studentsService.remove(+id);
+  deleteStudent(@Param('id') id: string) {
+    return this.studentsService.deleteStudent(+id);
   }
 }

@@ -1,9 +1,11 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
 } from 'class-validator';
+import { DoctorSpecialization } from 'src/shared/constants';
 export class CreateDoctorDto {
   /** @example Rahmat */
   @IsNotEmpty()
@@ -38,10 +40,9 @@ export class CreateDoctorDto {
   @IsString()
   gender: string;
 
-  /** @example 'Computer Science */
-  @IsNotEmpty()
-  @IsString()
-  department: string;
+  /** @example Gynecology */
+  @IsEnum(DoctorSpecialization)
+  specialization: DoctorSpecialization;
 
   /** @example Science */
   @IsNotEmpty()
