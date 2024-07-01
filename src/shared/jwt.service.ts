@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtPayload, Tokens } from 'src/shared/constants';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload, Tokens } from './typeDef.dto';
 
 @Injectable()
 export class JwtHandler {

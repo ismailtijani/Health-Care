@@ -7,13 +7,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HelperService, JwtHandler } from 'src/shared';
+import { HelperService, JwtHandler, JwtPayload, Tokens } from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { CreateStudentDto } from 'src/studentsAuth/dto';
 import { Student } from 'src/studentsAuth/entities';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { JwtPayload, Tokens } from 'src/shared/constants';
 
 @Injectable()
 export class StudentAuthService {

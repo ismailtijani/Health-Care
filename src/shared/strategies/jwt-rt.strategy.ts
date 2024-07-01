@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
-import { JwtPayload } from '../constants';
+import { JwtPayload } from '../typeDef.dto';
 
 @Injectable()
 export class RtStrategy extends PassportStrategy(Strategy, 'refreshToken') {

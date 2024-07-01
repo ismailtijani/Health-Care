@@ -44,7 +44,7 @@ export class CreateDoctorDto {
   @IsEnum(DoctorSpecialization)
   specialization: DoctorSpecialization;
 
-  /** @example Science */
+  /** @example 14/SC/4321 */
   @IsNotEmpty()
   @IsString()
   doctorId: string;

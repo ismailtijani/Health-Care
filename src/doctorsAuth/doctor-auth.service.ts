@@ -10,9 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorEntity } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { HelperService, JwtHandler } from 'src/shared';
+import { HelperService, JwtHandler, JwtPayload, Tokens } from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
-import { JwtPayload, Tokens } from 'src/shared/constants';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
