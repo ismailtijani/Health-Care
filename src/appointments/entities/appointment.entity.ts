@@ -14,7 +14,7 @@ export class Appointment {
   @ManyToOne(() => DoctorEntity, (doctor) => doctor.appointments)
   doctor: DoctorEntity;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'datetime' })
   appointmentDate: Date;
 
   @Column({ type: 'time' })
