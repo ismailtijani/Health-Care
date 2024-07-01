@@ -16,8 +16,8 @@ const PORT = configService.get<number>('PORT') as number;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const serviceName = 'healthcare';
-  app.setGlobalPrefix(`/api/${serviceName}`);
+  // const serviceName = 'healthcare';
+  // app.setGlobalPrefix(`/api/${serviceName}`);
 
   // Setup Global pipe for Validation
   app.useGlobalPipes(new ValidationPipe());
@@ -36,7 +36,8 @@ async function bootstrap() {
   };
 
   const document = SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup(`/api/${serviceName}/documentation`, app, document);
+  // SwaggerModule.setup(`/api/${serviceName}/documentation`, app, document);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(PORT, async () =>
     console.log(`Server is running 🚀🚀🚀 on: ${await app.getUrl()}`),
