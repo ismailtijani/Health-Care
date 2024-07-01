@@ -16,10 +16,11 @@ import { AppointmentsModule } from './appointments/appointments.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './env/prod.env',
-      // process.env.NODE_ENV === 'production'
-      //   ? './env/prod.env'
-      //   : './env/dev.env',
+      envFilePath:
+        // envFilePath: './env/prod.env',
+        process.env.NODE_ENV === 'production'
+          ? './env/prod.env'
+          : './env/dev.env',
     }),
 
     TypeOrmModule.forRootAsync({

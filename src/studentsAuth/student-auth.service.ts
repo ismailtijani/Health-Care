@@ -43,6 +43,7 @@ User Registration Method
       const newStudent = this.studentRepository.create(studentDetails);
       //Save the new user to database
       savedStudent = await this.studentRepository.save(newStudent);
+      console.log(savedStudent);
     } catch (error: any) {
       this.logger.error(error);
       //   throw new DatabaseExceptionFilter(error);
