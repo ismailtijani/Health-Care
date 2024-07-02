@@ -24,7 +24,9 @@ export class DoctorJwtStrategy extends PassportStrategy(
   }
 
   async validate(payload: JwtPayload) {
+    console.log(payload);
     const doctor = await this.doctorRepository.findOneBy({ id: payload.sub });
+    console.log(doctor);
     if (!doctor) throw new UnauthorizedException('Access Denied!!!');
     return doctor;
   }

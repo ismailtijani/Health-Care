@@ -171,7 +171,11 @@ Refresh Token Method
   ): Promise<Tokens> {
     const student = await this.studentRepository.findOneBy({ id: payload.sub });
 
-    if (student && (await bcrypt.compare(refreshToken, student.refreshToken))) {
+    if (
+      student &&
+      student.refreshToken &&
+      (await bcrypt.compare(refreshToken, student.refreshToken))
+    ) {
       const { accessToken, refreshToken } =
         await this.jwtService.generateTokens(payload);
       await this.updateRefreshToken(payload.sub, refreshToken);

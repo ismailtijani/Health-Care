@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpCode,
@@ -7,6 +8,7 @@ import {
   Post,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { DoctorAuthService } from './doctor-auth.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
@@ -18,6 +20,7 @@ import { DoctorAuthGuard } from './guards';
 
 @ApiTags('DoctorAuth')
 @Controller('auth/doctor')
+@UseInterceptors(ClassSerializerInterceptor)
 export class DoctorAuthController {
   constructor(private readonly doctorAuthService: DoctorAuthService) {}
 
@@ -27,11 +30,7 @@ export class DoctorAuthController {
     return this.doctorAuthService.createDoctor(createDoctorDto);
   }
 
-  /**
-   * This endpoint logs the doctor in
-   * a 401 error is thrown if endpoint doesn't exist
-   * @param loginDetails
-   */
+  /**This endpoint logs the doctor in */
   @Post('login')
   login(@Body() loginDetails: LoginDto) {
     return this.doctorAuthService.login(loginDetails);

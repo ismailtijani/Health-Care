@@ -41,17 +41,17 @@ User Registration Method
 ========================================
 */
   async createDoctor(doctorDetails: CreateDoctorDto) {
-    let savedDoctor: DoctorEntity;
+    let doctor: DoctorEntity;
     try {
       // Create a new doctor entity
       const newDoctor = this.doctorRepositories.create(doctorDetails);
       //Save the new user to database
-      savedDoctor = await this.doctorRepositories.save(newDoctor);
+      doctor = await this.doctorRepositories.save(newDoctor);
     } catch (error) {
       throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
-    const payload = { sub: savedDoctor.id, email: savedDoctor.email };
+    const payload = { sub: doctor.id, email: doctor.email };
     // Generate Tokens
     const { accessToken, refreshToken } =
       await this.jwtService.generateTokens(payload);
@@ -60,7 +60,7 @@ User Registration Method
     // Send Welcome Email
     // this.emailService.sendUserWelcomeEmail(savedUser, '12345'); // Create a Dto and generate token
 
-    return { savedDoctor, accessToken, refreshToken };
+    return { doctor, accessToken, refreshToken };
   }
 
   /* 
@@ -168,7 +168,11 @@ Refresh Token Method
   ): Promise<Tokens> {
     const doctor = await this.doctorRepositories.findOneBy({ id: payload.sub });
 
-    if (doctor && (await bcrypt.compare(refreshToken, doctor.refreshToken))) {
+    if (
+      doctor &&
+      doctor.refreshToken &&
+      (await bcrypt.compare(refreshToken, doctor.refreshToken))
+    ) {
       const { accessToken, refreshToken } =
         await this.jwtService.generateTokens(payload);
       await this.updateRefreshToken(payload.sub, refreshToken);
