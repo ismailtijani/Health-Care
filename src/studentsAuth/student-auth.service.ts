@@ -7,7 +7,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HelperService, JwtHandler, JwtPayload, Tokens } from 'src/shared';
+import {
+  DatabaseExceptionFilter,
+  HelperService,
+  JwtHandler,
+  JwtPayload,
+  Tokens,
+} from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { CreateStudentDto } from 'src/studentsAuth/dto';
 import { Student } from 'src/studentsAuth/entities';
@@ -42,10 +48,8 @@ User Registration Method
       const newStudent = this.studentRepository.create(studentDetails);
       //Save the new user to database
       savedStudent = await this.studentRepository.save(newStudent);
-      console.log(savedStudent);
-    } catch (error: any) {
-      this.logger.error(error);
-      //   throw new DatabaseExceptionFilter(error);
+    } catch (error) {
+      throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
     const payload = { sub: savedStudent.id, email: savedStudent.email };
@@ -83,7 +87,11 @@ User LogOut Method
 */
 
   async logout(id: number) {
-    await this.studentRepository.update(id, { refreshToken: null });
+    try {
+      await this.studentRepository.update(id, { refreshToken: null });
+    } catch (error) {
+      throw new DatabaseExceptionFilter(error);
+    }
   }
 
   /* 
@@ -108,7 +116,7 @@ Password Recovery Method
     try {
       await this.studentRepository.save(student);
     } catch (error) {
-      //   throw new DatabaseExceptionFilter(error);
+      throw new DatabaseExceptionFilter(error);
     }
 
     // this.emailService.sendPasswordRecoveryEmail({
@@ -146,7 +154,7 @@ Password Reset Method
       student.resetPasswordToken = null;
       this.studentRepository.save(student);
     } catch (error) {
-      console.log(JSON.stringify(error));
+      this.logger.log(JSON.stringify(error));
       throw new InternalServerErrorException();
     }
     return 'Your Password has been reset successfully, Kindly login with your new password';
@@ -203,7 +211,7 @@ Update Refresh Token
     try {
       await this.studentRepository.update({ id }, { refreshToken: hashedRt });
     } catch (error) {
-      //   throw new DatabaseExceptionFilter(error);
+      throw new DatabaseExceptionFilter(error);
     }
   }
 }

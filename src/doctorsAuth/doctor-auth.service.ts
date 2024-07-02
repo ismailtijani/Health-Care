@@ -10,7 +10,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DoctorEntity } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { HelperService, JwtHandler, JwtPayload, Tokens } from 'src/shared';
+import {
+  DatabaseExceptionFilter,
+  HelperService,
+  JwtHandler,
+  JwtPayload,
+  Tokens,
+} from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import * as bcrypt from 'bcryptjs';
 
@@ -41,9 +47,8 @@ User Registration Method
       const newDoctor = this.doctorRepositories.create(doctorDetails);
       //Save the new user to database
       savedDoctor = await this.doctorRepositories.save(newDoctor);
-    } catch (error: any) {
-      this.logger.error(error);
-      //   throw new DatabaseExceptionFilter(error);
+    } catch (error) {
+      throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
     const payload = { sub: savedDoctor.id, email: savedDoctor.email };
@@ -80,7 +85,11 @@ Doctor LogOut Method
 ========================================
 */
   async logout(id: number) {
-    await this.doctorRepositories.update(id, { refreshToken: null });
+    try {
+      await this.doctorRepositories.update(id, { refreshToken: null });
+    } catch (error) {
+      throw new DatabaseExceptionFilter(error);
+    }
   }
 
   /* 
@@ -104,7 +113,7 @@ Password Recovery Method
     try {
       await this.doctorRepositories.save(doctor);
     } catch (error) {
-      //   throw new DatabaseExceptionFilter(error);
+      throw new DatabaseExceptionFilter(error);
     }
 
     // this.emailService.sendPasswordRecoveryEmail({
@@ -202,7 +211,7 @@ Update Refresh Token
     try {
       await this.doctorRepositories.update({ id }, { refreshToken: hashedRt });
     } catch (error) {
-      //   throw new DatabaseExceptionFilter(error);
+      throw new DatabaseExceptionFilter(error);
     }
   }
 }

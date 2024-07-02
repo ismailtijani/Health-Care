@@ -18,11 +18,11 @@ import { Appointment } from './appointments/entities';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // envFilePath:
-      envFilePath: './env/prod.env',
-      // process.env.NODE_ENV === 'production'
-      //   ? './env/prod.env'
-      //   : './env/dev.env',
+      envFilePath:
+        // envFilePath: './env/prod.env',
+        process.env.NODE_ENV === 'production'
+          ? './env/prod.env'
+          : './env/dev.env',
     }),
 
     TypeOrmModule.forRootAsync({
@@ -37,7 +37,7 @@ import { Appointment } from './appointments/entities';
         database: configService.get<string>('DATABASE_NAME'),
         entities: [Student, DoctorEntity, Appointment],
         synchronize: true,
-        // dropSchema: true,
+        dropSchema: true,
       }),
     }),
     StudentsModule,

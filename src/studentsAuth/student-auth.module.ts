@@ -6,8 +6,9 @@ import { HelperService, JwtHandler } from 'src/shared';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Student } from './entities';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtStrategy, RtStrategy } from 'src/shared/strategies';
+import { RtStrategy } from 'src/shared/strategies';
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './guards';
 
 @Module({
   imports: [

@@ -12,13 +12,13 @@ import {
 } from '@nestjs/common';
 import { UpdateStudentDto } from '../studentsAuth/dto/update-student.dto';
 import { StudentService } from './students.service';
-import { JwtGuard } from 'src/shared/guards';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
+import { StudentAuthGuard } from 'src/studentsAuth/guards';
 
 @ApiTags('Student')
 @Controller('student')
-@UseGuards(JwtGuard)
+@UseGuards(StudentAuthGuard)
 export class StudentController {
   constructor(private readonly studentsService: StudentService) {}
 

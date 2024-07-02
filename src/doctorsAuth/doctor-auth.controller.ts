@@ -14,6 +14,7 @@ import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { ApiTags } from '@nestjs/swagger';
 import { RefreshTokenGuard } from 'src/shared/guards';
 import { Request } from 'express';
+import { DoctorAuthGuard } from './guards';
 
 @ApiTags('DoctorAuth')
 @Controller('auth/doctor')
@@ -37,13 +38,13 @@ export class DoctorAuthController {
   }
 
   /** API Endpoint to Logout Doctor */
-  // @Get('logout')
-  // // @UseGuards(JwtGuard)
-  // @HttpCode(HttpStatus.OK)
-  // async logout(@Req() req: Request) {
-  //   await this.doctorAuthService.logout(req.user['id']);
-  //   return 'You have successfully logout of the system, see you soon!';
-  // }
+  @Get('logout')
+  @UseGuards(DoctorAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  async logout(@Req() req: Request) {
+    await this.doctorAuthService.logout(req.user['id']);
+    return 'You have successfully logout of the system, see you soon!';
+  }
 
   /**
    * This endpoint is  called when a doctor forgots his/her password

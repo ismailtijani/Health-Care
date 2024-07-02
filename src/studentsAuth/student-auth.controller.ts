@@ -18,7 +18,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
-import { JwtGuard } from 'src/shared/guards';
+import { RefreshTokenGuard } from 'src/shared/guards';
+import { StudentAuthGuard } from './guards';
 import { Request } from 'express';
 
 @ApiTags('StudentAuth')
@@ -51,7 +52,7 @@ export class StudentAuthController {
 
   /** API Endpoint to Logout Student */
   @Get('logout')
-  @UseGuards(JwtGuard)
+  @UseGuards(StudentAuthGuard)
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request) {
     await this.studentAuthService.logout(req.user['id']);
@@ -80,7 +81,7 @@ export class StudentAuthController {
 
   /** API Endpoint to get Refresh Tokens */
   @Get('refresh-token')
-  // @UseGuards(RefreshTokenGuard)
+  @UseGuards(RefreshTokenGuard)
   @HttpCode(HttpStatus.OK)
   refreshToken(@Req() req: Request) {
     const user = req.user;
