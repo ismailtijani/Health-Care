@@ -1,10 +1,4 @@
-import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  IsStrongPassword,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { DoctorSpecialization } from 'src/shared/constants';
 export class CreateDoctorDto {
   /** @example Rahmat */
@@ -22,12 +16,13 @@ export class CreateDoctorDto {
   email: string;
 
   /** @example Password@123 */
-  @IsStrongPassword({
-    minLength: 8,
-    minNumbers: 1,
-    minSymbols: 1,
-    minUppercase: 1,
-  })
+  // @IsStrongPassword({
+  //   minLength: 8,
+  //   minNumbers: 1,
+  //   minSymbols: 1,
+  //   minUppercase: 1,
+  // })
+  @IsString()
   password: string;
 
   /** @example 080********35 */

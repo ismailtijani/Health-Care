@@ -21,12 +21,14 @@ export class CreateStudentDto {
   email: string;
 
   /** @example Password@123 */
-  @IsStrongPassword({
-    minLength: 8,
-    minNumbers: 1,
-    minSymbols: 1,
-    minUppercase: 1,
-  })
+  // @IsStrongPassword({
+  //   minLength: 8,
+  //   minNumbers: 1,
+  //   minSymbols: 1,
+  //   minUppercase: 1,
+  // })
+  @IsNotEmpty()
+  @IsString()
   password: string;
 
   /** @example 080********35 */
