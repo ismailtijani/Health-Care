@@ -6,6 +6,7 @@ import {
   Param,
   Get,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
@@ -14,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AppointmentQueryDto } from './dto';
 
 @ApiTags('Appointments')
+@UseGuards()
 @Controller('appointments')
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}

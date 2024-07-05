@@ -14,11 +14,11 @@ import { UpdateStudentDto } from '../studentsAuth/dto/update-student.dto';
 import { StudentService } from './students.service';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { StudentAuthGuard } from 'src/studentsAuth/guards';
+import { JwtAuthGuard } from 'src/shared/guards';
 
 @ApiTags('Student')
+@UseGuards(JwtAuthGuard)
 @Controller('student')
-@UseGuards(StudentAuthGuard)
 export class StudentController {
   constructor(private readonly studentsService: StudentService) {}
 

@@ -8,12 +8,12 @@ import {
 } from '@nestjs/common';
 import { DoctorService } from './doctors.service';
 import { ApiTags } from '@nestjs/swagger';
-import { DoctorAuthGuard } from 'src/doctorsAuth/guards';
 import { Request } from 'express';
+import { JwtAuthGuard } from 'src/shared/guards';
 
 @ApiTags('Doctors')
+@UseGuards(JwtAuthGuard)
 @Controller('doctor')
-@UseGuards(DoctorAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class DoctorController {
   constructor(private readonly doctorsService: DoctorService) {}

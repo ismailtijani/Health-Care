@@ -14,9 +14,8 @@ import { DoctorAuthService } from './doctor-auth.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { ApiTags } from '@nestjs/swagger';
-import { RefreshTokenGuard } from 'src/shared/guards';
+import { JwtAuthGuard, RefreshTokenGuard } from 'src/shared/guards';
 import { Request } from 'express';
-import { DoctorAuthGuard } from './guards';
 
 @ApiTags('DoctorAuth')
 @Controller('auth/doctor')
@@ -38,7 +37,7 @@ export class DoctorAuthController {
 
   /** API Endpoint to Logout Doctor */
   @Get('logout')
-  @UseGuards(DoctorAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request) {
     await this.doctorAuthService.logout(req.user['id']);

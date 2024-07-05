@@ -18,8 +18,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
-import { RefreshTokenGuard } from 'src/shared/guards';
-import { StudentAuthGuard } from './guards';
+import { JwtAuthGuard, RefreshTokenGuard } from 'src/shared/guards';
 import { Request } from 'express';
 
 @ApiTags('StudentAuth')
@@ -35,11 +34,7 @@ export class StudentAuthController {
     return this.studentAuthService.createStudent(signupDetails);
   }
 
-  /**
-   * This endpoint logs the student in
-   * a 401 error is thrown if endpoint doesn't exist
-   * @param loginDetails
-   */
+  /** This endpoint logs the student in */
   @ApiUnauthorizedResponse({
     description:
       'Invalid Email or Password, Please check your login credentials',
@@ -51,18 +46,15 @@ export class StudentAuthController {
   }
 
   /** API Endpoint to Logout Student */
+  @UseGuards(JwtAuthGuard) //Work on this
   @Get('logout')
-  @UseGuards(StudentAuthGuard)
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request) {
     await this.studentAuthService.logout(req.user['id']);
     return 'You have successfully logout of the system, see you soon!';
   }
 
-  /**
-   * This endpoint is  called when a user forgots his/her password
-   * @param forgotPasswordData
-   */
+  /** This endpoint is called when a user forgots his/her password */
   @Post('password/forgot')
   @HttpCode(HttpStatus.OK)
   forgotPassword(@Body() forgotPasswordData: ForgotPasswordDto) {
