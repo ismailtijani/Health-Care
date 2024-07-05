@@ -2,20 +2,21 @@ import {
   IsDate,
   IsDateString,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class CreateAppointmentDto {
-  /** @example 13/CIS/CS/451 */
+  /** @example 4 */
   @IsNotEmpty()
-  @IsString()
-  studentId: string;
+  @IsNumber()
+  studentId: number;
 
   /** @example 1 */
   @IsNotEmpty()
-  @IsString()
-  doctorId: string;
+  @IsNumber()
+  doctorId: number;
 
   /** @example 2024-06-29 */
   @IsDateString()

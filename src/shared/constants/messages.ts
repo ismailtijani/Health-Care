@@ -8,7 +8,7 @@ export enum ErrorMessages {
 
   // AUth Errors
   INVALID_LOGIN_DETAILS_ERROR = 'Invalid username or password',
-  CLIENT_INACTIVE_ERROR = 'Acquirer is Inactive',
+  DOCTOR_INACTIVE_ERROR = 'Vendor is Inactive',
   AUTH_TOKEN_REQUIRED_ERROR = 'Authorization token is required',
   INVALID_USER_REQUIRED_ERROR = 'User Not Authorized',
   INVALID_AUTH_TOKEN_ERROR = 'Invalid Authorization token',

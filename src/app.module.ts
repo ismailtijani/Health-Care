@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DoctorsModule } from './doctors/doctors.module';
+import { DoctorModule } from './doctors/doctors.module';
 import { StudentAuthModule } from './studentsAuth/student-auth.module';
 import { DoctorAuthModule } from './doctorsAuth/doctor-auth.module';
 import { EmailModule } from './email/email.module';
-import { StudentsModule } from './students/students.module';
+import { StudentModule } from './students/students.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Student } from './studentsAuth/entities';
@@ -37,11 +37,10 @@ import { Appointment } from './appointments/entities';
         database: configService.get<string>('DATABASE_NAME'),
         entities: [Student, DoctorEntity, Appointment],
         synchronize: true,
-        dropSchema: true,
       }),
     }),
-    StudentsModule,
-    DoctorsModule,
+    StudentModule,
+    DoctorModule,
     StudentAuthModule,
     DoctorAuthModule,
     EmailModule,

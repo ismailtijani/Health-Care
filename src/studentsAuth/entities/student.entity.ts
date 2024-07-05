@@ -4,7 +4,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Appointment } from 'src/appointments/entities/appointment.entity';
 
-@Entity('student')
+@Entity()
 export class Student extends BaseEntity {
   @Column()
   matricNumber: string;

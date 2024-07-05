@@ -1,8 +1,17 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AppointmentQueryDto } from './dto';
 
 @ApiTags('Appointments')
 @Controller('appointments')
@@ -12,6 +21,16 @@ export class AppointmentsController {
   @Post()
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentsService.create(createAppointmentDto);
+  }
+
+  @Get()
+  getAllAppointments(@Query() queryParams: AppointmentQueryDto) {
+    return this.appointmentsService.getAllAppointments(queryParams);
+  }
+
+  @Get(':id')
+  getAppointment(@Param('id') id: number) {
+    return this.appointmentsService.getAppointment(id);
   }
 
   @Patch(':id/reschedule')
