@@ -19,6 +19,7 @@ import {
 } from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import * as bcrypt from 'bcryptjs';
+import { UserType } from 'src/shared/constants';
 
 @Injectable()
 export class DoctorAuthService {
@@ -51,7 +52,11 @@ User Registration Method
       throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
-    const payload = { sub: doctor.id, email: doctor.email };
+    const payload = {
+      sub: doctor.id,
+      email: doctor.email,
+      userType: UserType.Doctor,
+    };
     // Generate Tokens
     const { accessToken, refreshToken } =
       await this.jwtService.generateTokens(payload);
@@ -70,7 +75,12 @@ Doctor Login Method
 */
   async login(loginDetails: LoginDto) {
     const doctor = await this.findUserByCredentials(loginDetails);
-    const payload = { sub: doctor.id, email: doctor.email };
+    const payload = {
+      sub: doctor.id,
+      email: doctor.email,
+      userType: UserType.Doctor,
+    };
+
     // Generate Tokens
     const { accessToken, refreshToken } =
       await this.jwtService.generateTokens(payload);

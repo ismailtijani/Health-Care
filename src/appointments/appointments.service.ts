@@ -15,7 +15,7 @@ import {
 } from './dto';
 import { DatabaseExceptionFilter } from 'src/shared';
 import { PaginatedResult } from 'src/shared/interfaces';
-import { Student } from 'src/studentsAuth/entities';
+import { Student } from 'src/studentAuth/entities';
 import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
 
 @Injectable()

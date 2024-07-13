@@ -2,17 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DoctorModule } from './doctors/doctors.module';
-import { StudentAuthModule } from './studentsAuth/student-auth.module';
 import { DoctorAuthModule } from './doctorsAuth/doctor-auth.module';
 import { EmailModule } from './email/email.module';
-import { StudentModule } from './students/students.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Student } from './studentsAuth/entities';
+import { Student } from './studentAuth/entities';
 import { AdminModule } from './admin/admin.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { DoctorEntity } from './doctorsAuth/entities/doctor.entity';
 import { Appointment } from './appointments/entities';
+import { StudentModule } from './students/students.module';
+import { StudentAuthModule } from './studentAuth/student-auth.module';
 
 @Module({
   imports: [
@@ -40,8 +40,8 @@ import { Appointment } from './appointments/entities';
       }),
     }),
     StudentModule,
-    DoctorModule,
     StudentAuthModule,
+    DoctorModule,
     DoctorAuthModule,
     EmailModule,
     AdminModule,

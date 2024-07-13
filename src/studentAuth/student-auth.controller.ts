@@ -11,15 +11,16 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { StudentAuthService } from './student-auth.service';
-import { CreateStudentDto } from 'src/studentsAuth/dto';
+import { CreateStudentDto } from 'src/studentAuth/dto';
 import {
   ApiBadRequestResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
-import { JwtAuthGuard, RefreshTokenGuard } from 'src/shared/guards';
+import { AuthGuard, RefreshTokenGuard } from 'src/shared/guards';
 import { Request } from 'express';
+import { Public } from 'src/shared/decorators';
 
 @ApiTags('StudentAuth')
 @Controller('auth/student')
@@ -27,8 +28,9 @@ import { Request } from 'express';
 export class StudentAuthController {
   constructor(private readonly studentAuthService: StudentAuthService) {}
 
-  /** API Endpoint for Student Registration */
+  // /** API Endpoint for Student Registration */
   @ApiBadRequestResponse()
+  @Public()
   @Post('signup')
   createStudent(@Body() signupDetails: CreateStudentDto) {
     return this.studentAuthService.createStudent(signupDetails);
@@ -46,7 +48,7 @@ export class StudentAuthController {
   }
 
   /** API Endpoint to Logout Student */
-  @UseGuards(JwtAuthGuard) //Work on this
+  @UseGuards(AuthGuard)
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request) {

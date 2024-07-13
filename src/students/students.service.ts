@@ -1,14 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { UpdateStudentDto } from '../studentsAuth/dto/update-student.dto';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { UpdateStudentDto } from '../studentAuth/dto/update-student.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Student } from 'src/studentAuth/entities';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class StudentService {
+  logger: Logger;
+  constructor(
+    @InjectRepository(Student) private studentRepository: Repository<Student>,
+  ) {
+    this.logger = new Logger(StudentService.name);
+  }
   findAll() {
     return `This action returns all students`;
   }
 
   getStudent(id: number) {
-    return `This action returns a #${id} student`;
+    const student = this.studentRepository.findOneBy({ id });
+    if (!student) throw new NotFoundException('Student not found');
+    return student;
   }
 
   updateStudent(id: number, updateStudentDto: UpdateStudentDto) {

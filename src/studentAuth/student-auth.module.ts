@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
-import { StudentAuthService } from './student-auth.service';
 import { StudentAuthController } from './student-auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HelperService, JwtHandler } from 'src/shared';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Student } from './entities';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RtStrategy } from 'src/shared/strategies';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './guards';
+import { Reflector } from '@nestjs/core';
+import { DoctorService } from 'src/doctors/doctors.service';
+import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
+import { StudentService } from 'src/students';
+import { StudentAuthService } from './student-auth.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Student]),
+    TypeOrmModule.forFeature([Student, DoctorEntity]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -27,11 +29,12 @@ import { JwtStrategy } from './guards';
   controllers: [StudentAuthController],
   providers: [
     StudentAuthService,
+    StudentService,
     JwtHandler,
-    JwtStrategy,
-    RtStrategy,
     HelperService,
     JwtService,
+    DoctorService,
+    Reflector,
   ],
 })
 export class StudentAuthModule {}

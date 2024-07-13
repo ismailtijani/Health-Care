@@ -15,10 +15,11 @@ import {
   Tokens,
 } from 'src/shared';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
-import { CreateStudentDto } from 'src/studentsAuth/dto';
-import { Student } from 'src/studentsAuth/entities';
+import { CreateStudentDto } from 'src/studentAuth/dto';
+import { Student } from 'src/studentAuth/entities';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { UserType } from 'src/shared/constants';
 
 @Injectable()
 export class StudentAuthService {
@@ -36,7 +37,7 @@ export class StudentAuthService {
     this.logger = new Logger(StudentAuthService.name);
   }
 
-  /* 
+  /*
 =======================================
 User Registration Method
 ========================================
@@ -52,7 +53,11 @@ User Registration Method
       throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
-    const payload = { sub: savedStudent.id, email: savedStudent.email };
+    const payload = {
+      sub: savedStudent.id,
+      email: savedStudent.email,
+      userType: UserType.Student,
+    };
     // Generate Tokens
     const { accessToken, refreshToken } =
       await this.jwtService.generateTokens(payload);
@@ -64,14 +69,18 @@ User Registration Method
     return { savedStudent, accessToken, refreshToken };
   }
 
-  /* 
+  /*
 =======================================
 User Login Method
 ========================================
 */
   async login(loginDetails: LoginDto) {
     const student = await this.findUserByCredentials(loginDetails);
-    const payload = { sub: student.id, email: student.email };
+    const payload = {
+      sub: student.id,
+      email: student.email,
+      userType: UserType.Student,
+    };
     // Generate Tokens
     const { accessToken, refreshToken } =
       await this.jwtService.generateTokens(payload);
@@ -80,7 +89,7 @@ User Login Method
     return { student, accessToken, refreshToken };
   }
 
-  /* 
+  /*
 =======================================
 User LogOut Method
 ========================================
@@ -94,7 +103,7 @@ User LogOut Method
     }
   }
 
-  /* 
+  /*
 =======================================
 Password Recovery Method
 ========================================
@@ -127,7 +136,7 @@ Password Recovery Method
     return 'Password recovery link has been sent your your email, Kindly check your mail';
   };
 
-  /* 
+  /*
 =======================================
 Password Reset Method
 ========================================
@@ -160,7 +169,7 @@ Password Reset Method
     return 'Your Password has been reset successfully, Kindly login with your new password';
   }
 
-  /* 
+  /*
 =======================================
 Refresh Token Method
 ========================================
@@ -184,7 +193,7 @@ Refresh Token Method
     throw new ForbiddenException('Access Denied!!!');
   }
 
-  /* 
+  /*
 =======================================
 Find User by credentials
 ========================================
@@ -204,7 +213,7 @@ Find User by credentials
     }
   }
 
-  /* 
+  /*
 =======================================
 Update Refresh Token
 ========================================

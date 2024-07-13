@@ -5,19 +5,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   HttpCode,
   HttpStatus,
   Req,
 } from '@nestjs/common';
-import { UpdateStudentDto } from '../studentsAuth/dto/update-student.dto';
-import { StudentService } from './students.service';
+import { UpdateStudentDto } from '../studentAuth/dto/update-student.dto';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/shared/guards';
+import { StudentService } from './students.service';
 
 @ApiTags('Student')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentsService: StudentService) {}

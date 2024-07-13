@@ -14,7 +14,7 @@ import { DoctorAuthService } from './doctor-auth.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard, RefreshTokenGuard } from 'src/shared/guards';
+import { RefreshTokenGuard } from 'src/shared/guards';
 import { Request } from 'express';
 
 @ApiTags('DoctorAuth')
@@ -30,6 +30,11 @@ export class DoctorAuthController {
   }
 
   /**This endpoint logs the doctor in */
+  //   @ApiOkResponse({ description: 'Successful' })
+  // @ApiNotFoundResponse({ description: 'clientUser with id not found ' })
+  // @ApiUnauthorizedResponse({ description: 'No Auth Token' })
+  // @ApiQuery({ name: 'clientUser', type: ClientUserQueryParamDTO })
+  // @HttpCode(200)
   @Post('login')
   login(@Body() loginDetails: LoginDto) {
     return this.doctorAuthService.login(loginDetails);
@@ -37,9 +42,10 @@ export class DoctorAuthController {
 
   /** API Endpoint to Logout Doctor */
   @Get('logout')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: Request) {
+    console.log(req.user);
     await this.doctorAuthService.logout(req.user['id']);
     return 'You have successfully logout of the system, see you soon!';
   }
