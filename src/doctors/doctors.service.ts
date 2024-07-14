@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
+import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

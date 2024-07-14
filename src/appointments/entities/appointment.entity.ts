@@ -1,4 +1,4 @@
-import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
+import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { AppoinmentStatus } from 'src/shared/constants';
 import { Student } from 'src/studentAuth/entities';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';

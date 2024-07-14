@@ -16,7 +16,7 @@ import {
 import { DatabaseExceptionFilter } from 'src/shared';
 import { PaginatedResult } from 'src/shared/interfaces';
 import { Student } from 'src/studentAuth/entities';
-import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
+import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 
 @Injectable()
 export class AppointmentsService {

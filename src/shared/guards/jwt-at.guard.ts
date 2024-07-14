@@ -11,7 +11,7 @@ import { Request } from 'express';
 import { JwtHandler } from '../jwt.service';
 import { JwtPayload } from '../typeDef.dto';
 import { DoctorService } from 'src/doctors/doctors.service';
-import { StudentService } from 'src/students';
+import { StudentService } from 'src/students/students.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

@@ -8,15 +8,17 @@ import {
   HttpCode,
   HttpStatus,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UpdateStudentDto } from '../studentAuth/dto/update-student.dto';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { StudentService } from './students.service';
+import { AuthGuard } from 'src/shared/guards';
 
 @ApiTags('Student')
-// @UseGuards(AuthGuard)
 @Controller('student')
+@UseGuards(AuthGuard)
 export class StudentController {
   constructor(private readonly studentsService: StudentService) {}
 

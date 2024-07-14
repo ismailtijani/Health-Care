@@ -8,9 +8,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 import { DoctorService } from 'src/doctors/doctors.service';
-import { DoctorEntity } from 'src/doctorsAuth/entities/doctor.entity';
-import { StudentService } from 'src/students';
+import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { StudentAuthService } from './student-auth.service';
+import { StudentService } from 'src/students/students.service';
 
 @Module({
   imports: [

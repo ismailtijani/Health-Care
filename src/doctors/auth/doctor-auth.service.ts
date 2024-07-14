@@ -7,9 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DoctorEntity } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
 import {
   DatabaseExceptionFilter,
   HelperService,
@@ -20,6 +18,8 @@ import {
 import { ForgotPasswordDto, LoginDto, ResetPasswordDto } from 'src/shared/dto';
 import * as bcrypt from 'bcryptjs';
 import { UserType } from 'src/shared/constants';
+import { DoctorEntity } from '../entities/doctor.entity';
+import { CreateDoctorDto } from '../dto';
 
 @Injectable()
 export class DoctorAuthService {
