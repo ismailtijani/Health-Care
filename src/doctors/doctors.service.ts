@@ -13,9 +13,9 @@ export class DoctorService {
     this.logger = new Logger(DoctorService.name);
   }
 
-  async getDoctor(id: number) {
+  async getDoctor(id: number): Promise<DoctorEntity> {
     const doctor = await this.doctorRepository.findOneBy({ id });
-    if (!doctor) throw new NotFoundException(`Dish with id ${id} not found`);
+    if (!doctor) throw new NotFoundException(`Doctor with id ${id} not found`);
     return doctor;
   }
 

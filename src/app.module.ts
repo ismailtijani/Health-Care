@@ -17,11 +17,11 @@ import { StudentAuthModule } from './studentAuth/student-auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // envFilePath:
-      envFilePath: './env/prod.env',
-      // process.env.NODE_ENV === 'production'
-      //   ? './env/prod.env'
-      //   : './env/dev.env',
+      envFilePath:
+        // envFilePath: './env/prod.env',
+        process.env.NODE_ENV === 'production'
+          ? './env/prod.env'
+          : './env/dev.env',
     }),
 
     TypeOrmModule.forRootAsync({

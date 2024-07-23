@@ -20,6 +20,7 @@ import * as bcrypt from 'bcryptjs';
 import { UserType } from 'src/shared/constants';
 import { DoctorEntity } from '../entities/doctor.entity';
 import { CreateDoctorDto } from '../dto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class DoctorAuthService {
@@ -30,7 +31,7 @@ export class DoctorAuthService {
     // // Inject JTWService
     private readonly jwtService: JwtHandler,
     // Inject EmailService
-    // private readonly emailService: EmailService,
+    private readonly emailService: EmailService,
     private readonly helperService: HelperService,
   ) {
     this.logger = new Logger(DoctorAuthService.name);
@@ -38,7 +39,7 @@ export class DoctorAuthService {
 
   /* 
 =======================================
-User Registration Method
+Doctor Registration Method
 ========================================
 */
   async createDoctor(doctorDetails: CreateDoctorDto) {
@@ -63,7 +64,7 @@ User Registration Method
     await this.updateRefreshToken(payload.sub, refreshToken);
 
     // Send Welcome Email
-    // this.emailService.sendUserWelcomeEmail(savedUser, '12345'); // Create a Dto and generate token
+    this.emailService.sendUserWelcomeEmail(doctor);
 
     return { doctor, accessToken, refreshToken };
   }
@@ -126,11 +127,12 @@ Password Recovery Method
       throw new DatabaseExceptionFilter(error);
     }
 
-    // this.emailService.sendPasswordRecoveryEmail({
-    //   email,
-    //   name: user.name,
-    //   resetToken,
-    // });
+    this.emailService.sendPasswordRecoveryEmail({
+      email,
+      name: doctor.firstName,
+      resetToken,
+    });
+
     return 'Password recovery link has been sent your your email, Kindly check your mail';
   };
 
@@ -161,7 +163,7 @@ Password Reset Method
       doctor.resetPasswordToken = null;
       this.doctorRepositories.save(doctor);
     } catch (error) {
-      console.log(JSON.stringify(error));
+      this.logger.error(error);
       throw new InternalServerErrorException();
     }
     return 'Your Password has been reset successfully, Kindly login with your new password';

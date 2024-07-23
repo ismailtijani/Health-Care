@@ -2,7 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { EmailController } from './email.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 
@@ -13,8 +13,6 @@ import { ConfigService } from '@nestjs/config';
       useFactory: async (config: ConfigService) => ({
         transport: {
           host: config.get('MAIL_HOST'),
-          // port: 465,
-          // ignoreTLS: true,
           secure: false,
           auth: {
             user: config.get('USER_GMAIL'),
@@ -26,7 +24,7 @@ import { ConfigService } from '@nestjs/config';
         },
         template: {
           dir: join(__dirname + '/templates'),
-          adapter: new EjsAdapter(),
+          adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
           },

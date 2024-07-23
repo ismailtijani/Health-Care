@@ -94,16 +94,16 @@ export class DoctorController {
     );
   }
 
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  getDoctor(@Param('id') id: number) {
-    return this.doctorsService.getDoctor(id);
-  }
-
   @Get('profile')
   @HttpCode(HttpStatus.OK)
   getDoctorProfile(@Req() req: Request) {
     return req.user;
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  getDoctor(@Param('id') id: number) {
+    return this.doctorsService.getDoctor(id);
   }
 
   @Get()

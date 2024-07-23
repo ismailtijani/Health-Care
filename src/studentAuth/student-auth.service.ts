@@ -44,19 +44,19 @@ User Registration Method
 ========================================
 */
   async createStudent(studentDetails: CreateStudentDto) {
-    let savedStudent: Student;
+    let student: Student;
     try {
       // Create a new user entity
       const newStudent = this.studentRepository.create(studentDetails);
       //Save the new user to database
-      savedStudent = await this.studentRepository.save(newStudent);
+      student = await this.studentRepository.save(newStudent);
     } catch (error) {
       throw new DatabaseExceptionFilter(error);
     }
     // Generate JWT token payload
     const payload = {
-      sub: savedStudent.id,
-      email: savedStudent.email,
+      sub: student.id,
+      email: student.email,
       userType: UserType.Student,
     };
     // Generate Tokens
@@ -65,9 +65,9 @@ User Registration Method
     await this.updateRefreshToken(payload.sub, refreshToken);
 
     // Send Welcome Email
-    this.emailService.sendUserWelcomeEmail(savedStudent, '12345'); // Create a Dto and generate token
+    this.emailService.sendUserWelcomeEmail(student);
 
-    return { savedStudent, accessToken, refreshToken };
+    return { student, accessToken, refreshToken };
   }
 
   /*

@@ -1,48 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Student } from 'src/studentAuth/entities';
 import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { PasswordRecoveryData } from 'src/shared';
 
 @Injectable()
 export class EmailService {
-  constructor(private readonly mailService: MailerService) {}
+  private logger: Logger;
+  constructor(private readonly mailService: MailerService) {
+    this.logger = new Logger(EmailService.name);
+  }
 
   /* 
 =======================================
 Send Welcome Email
 ========================================
 */
-  async sendUserWelcomeEmail(student: Student, token: string): Promise<void> {
-    const confirmationUrl = `exmaple.com/auth/confrim?token=${token}`;
-
-    await this.mailService.sendMail({
-      to: student.email,
-      from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
-      subject: 'Welcome to UniIlorin Health Center ✔ Confirm your Email',
-      template: 'welcome', // `.ejs` extension is appended automatically
-      context: {
-        name: student.firstName,
-        confirmationUrl,
-      },
-    });
+  async sendUserWelcomeEmail(user: {
+    email: string;
+    firstName: string;
+  }): Promise<void> {
+    this.logger.log(`Sending welcome email to: ${user.email}`);
+    try {
+      await this.mailService.sendMail({
+        to: user.email,
+        from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
+        subject: 'Welcome to UniIlorin Health Center ✔',
+        template: './welcome', // `.ejs` extension is appended automatically
+        context: {
+          userName: user.firstName,
+          loginUrl: 'example@url',
+        },
+      });
+      this.logger.log(`Email sent successfully: ${user.email}`);
+    } catch (error) {
+      this.logger.error(`Error sending email: ${error}`);
+    }
   }
 
   async sendAccountActivationCode(
     doctor: DoctorEntity,
-    confirmationCode: string,
+    confirmationCode: number,
   ) {
-    const confirmationUrl = `https://foodit-cpig.onrender.com/auth/vendor/account_activation?token=${confirmationCode}`;
+    const activationUrl = `https://foodit-cpig.onrender.com/doctor/account_activation?confirmationCode=${confirmationCode}`;
 
     await this.mailService
       .sendMail({
         to: doctor.email,
         from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
         subject: 'ACCOUNT ACTIVATION',
-        template: './accountActivation', // `.ejs` extension is appended automatically
+        template: './accountActivation', // `.hbs` extension is appended automatically
         context: {
-          name: doctor.firstName,
-          confirmationUrl,
+          userName: doctor.firstName,
+          activationUrl,
         },
       })
       .then(() => {})
@@ -54,41 +63,32 @@ Send Welcome Email
       to: email,
       from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
       subject: 'ACCOUNT ACTIVATION SUCCESSFUL',
-      template: './accountActivationSuccess', // `.ejs` extension is appended automatically
+      template: './accountActivationSuccess', // `.hbss` extension is appended automatically
       context: {
-        name: businessName,
-      },
-    });
-  }
-
-  async validationMail(doctor: DoctorEntity, token: string) {
-    const confirmationUrl = `exmaple.com/auth/confrim?token=${token}`;
-
-    await this.mailService.sendMail({
-      to: doctor.email,
-      from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
-      subject: 'Welcome to FoodIt! Confirm your Email',
-      template: './welcome', // `.ejs` extension is appended automatically
-      context: {
-        name: doctor.firstName,
-        confirmationUrl,
+        userName: businessName,
       },
     });
   }
 
   async sendPasswordRecoveryEmail(data: PasswordRecoveryData) {
     const { email, name, resetToken } = data;
-    const resetPasswordUrl = `exmaple.com/auth/confrim?token=${resetToken}`;
+    const resetPasswordUrl = `https://foodit-cpig.onrender.com/doctor/account_activation?confirmationCode=${resetToken}`;
 
-    await this.mailService.sendMail({
-      to: email,
-      from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
-      subject: 'Password Recovery Assistance!',
-      template: './forgotPassword', // `.ejs` extension is appended automatically
-      context: {
-        name: name,
-        resetPasswordUrl,
-      },
-    });
+    this.logger.log(`Sending Password Recovery email to: ${email}`);
+    try {
+      await this.mailService.sendMail({
+        to: email,
+        from: '"UniIlorin HealthCare" <support@example.com>', // override default from,
+        subject: 'Reset Password Request',
+        template: './forgotPassword', // `.hbs` extension is appended automatically
+        context: {
+          userName: name,
+          resetPasswordUrl,
+        },
+      });
+      this.logger.log(`Password Recovery email sent successfully: ${email}`);
+    } catch (error) {
+      this.logger.error(`Error sending Password Recovery email: ${error}`);
+    }
   }
 }

@@ -12,7 +12,7 @@
       }
     ],
     "deleteOutDir": true,
-    "assets": ["email/templates/**/*.ejs"],
+    "assets": ["email/templates/**/*"],
     "watchAssets": true
   }
 }
