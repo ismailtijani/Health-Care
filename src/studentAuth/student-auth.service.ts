@@ -20,6 +20,7 @@ import { Student } from 'src/studentAuth/entities';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { UserType } from 'src/shared/constants';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class StudentAuthService {
@@ -31,7 +32,7 @@ export class StudentAuthService {
     // // Inject JTWService
     private readonly jwtService: JwtHandler,
     // Inject EmailService
-    // private readonly emailService: EmailService,
+    private readonly emailService: EmailService,
     private readonly helperService: HelperService,
   ) {
     this.logger = new Logger(StudentAuthService.name);
@@ -64,7 +65,7 @@ User Registration Method
     await this.updateRefreshToken(payload.sub, refreshToken);
 
     // Send Welcome Email
-    // this.emailService.sendUserWelcomeEmail(savedUser, '12345'); // Create a Dto and generate token
+    this.emailService.sendUserWelcomeEmail(savedStudent, '12345'); // Create a Dto and generate token
 
     return { savedStudent, accessToken, refreshToken };
   }
@@ -128,11 +129,11 @@ Password Recovery Method
       throw new DatabaseExceptionFilter(error);
     }
 
-    // this.emailService.sendPasswordRecoveryEmail({
-    //   email,
-    //   name: user.name,
-    //   resetToken,
-    // });
+    this.emailService.sendPasswordRecoveryEmail({
+      email,
+      name: student.firstName,
+      resetToken,
+    });
     return 'Password recovery link has been sent your your email, Kindly check your mail';
   };
 

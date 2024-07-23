@@ -45,6 +45,7 @@ export class DoctorController {
   // @HttpCode(200)
   @Post('login')
   @Public()
+  @HttpCode(HttpStatus.OK)
   login(@Body() loginDetails: LoginDto) {
     return this.doctorAuthService.login(loginDetails);
   }
@@ -63,6 +64,7 @@ export class DoctorController {
    * @param forgotPasswordData
    */
   @Post('password/forgot')
+  @Public()
   @HttpCode(HttpStatus.OK)
   forgotPassword(@Body() forgotPasswordData: ForgotPasswordDto) {
     return this.doctorAuthService.forgotPassowrd(forgotPasswordData);
@@ -73,6 +75,7 @@ export class DoctorController {
    * @param resetData
    */
   @Post('password/reset')
+  @Public()
   @HttpCode(HttpStatus.OK)
   resetPassword(@Body() resetData: ResetPasswordDto) {
     return this.doctorAuthService.resetPassword(resetData);
@@ -92,11 +95,21 @@ export class DoctorController {
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   getDoctor(@Param('id') id: number) {
     return this.doctorsService.getDoctor(id);
   }
+
   @Get('profile')
+  @HttpCode(HttpStatus.OK)
   getDoctorProfile(@Req() req: Request) {
     return req.user;
+  }
+
+  @Get()
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  getAllDoctors() {
+    return this.doctorsService.getAllDoctors();
   }
 }

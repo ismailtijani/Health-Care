@@ -11,6 +11,8 @@
         }
       }
     ],
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": ["email/templates/**/*.ejs"],
+    "watchAssets": true
   }
 }
