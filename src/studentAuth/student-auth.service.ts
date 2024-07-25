@@ -40,7 +40,7 @@ export class StudentAuthService {
 
   /*
 =======================================
-User Registration Method
+Student Registration Method
 ========================================
 */
   async createStudent(studentDetails: CreateStudentDto) {
@@ -72,7 +72,7 @@ User Registration Method
 
   /*
 =======================================
-User Login Method
+Student Login Method
 ========================================
 */
   async login(loginDetails: LoginDto) {
@@ -92,7 +92,7 @@ User Login Method
 
   /*
 =======================================
-User LogOut Method
+Student LogOut Method
 ========================================
 */
 
@@ -106,7 +106,7 @@ User LogOut Method
 
   /*
 =======================================
-Password Recovery Method
+Student Password Recovery Method
 ========================================
 */
 
@@ -139,7 +139,7 @@ Password Recovery Method
 
   /*
 =======================================
-Password Reset Method
+Student Password Reset Method
 ========================================
 */
   async resetPassword(resetData: ResetPasswordDto) {
@@ -172,7 +172,7 @@ Password Reset Method
 
   /*
 =======================================
-Refresh Token Method
+Student Refresh Token Method
 ========================================
 */
   async refreshToken(
@@ -180,7 +180,6 @@ Refresh Token Method
     payload: JwtPayload,
   ): Promise<Tokens> {
     const student = await this.studentRepository.findOneBy({ id: payload.sub });
-
     if (
       student &&
       student.refreshToken &&

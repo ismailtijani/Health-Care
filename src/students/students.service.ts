@@ -12,25 +12,39 @@ export class StudentService {
   ) {
     this.logger = new Logger(StudentService.name);
   }
-  findAll() {
-    return `This action returns all students`;
+
+  /////////// A Method to get All Students //////////////////
+  getAllStudents(): Promise<Student[]> {
+    return this.studentRepository.find();
   }
 
-  getStudent(id: number) {
-    const student = this.studentRepository.findOneBy({ id });
-    if (!student) throw new NotFoundException('Student not found');
+  /////////// A Method to get A Student by ID //////////////////
+  async getStudent(id: number) {
+    const student = await this.studentRepository.findOneBy({ id });
+    if (!student)
+      throw new NotFoundException(`Student with id ${id} not found`);
     return student;
   }
 
-  updateStudent(id: number, updateStudentDto: UpdateStudentDto) {
-    return `This action updates a #${id} student`;
+  /////////// A Method to update Student //////////////////
+  async updateStudent(
+    id: number,
+    updateStudentDto: UpdateStudentDto,
+  ): Promise<Student> {
+    const student = await this.getStudent(id);
+    Object.assign(student, updateStudentDto);
+    return this.studentRepository.save(student);
   }
 
-  deactivateStudent(id: number) {
-    return `This action updates a #${id} student`;
+  /////////// A Method to Deactivate Student //////////////////
+  async deactivateStudent(id: number): Promise<string> {
+    await this.studentRepository.delete({ id });
+    return `Student with the id ${id} deleted successfully`;
   }
 
-  deleteStudent(id: number) {
-    return `This action removes a #${id} student`;
+  /////////// A Method to Delete Student //////////////////
+  async deleteStudent(id: number): Promise<string> {
+    await this.studentRepository.delete({ id });
+    return `Student with the id ${id} deleted successfully`;
   }
 }

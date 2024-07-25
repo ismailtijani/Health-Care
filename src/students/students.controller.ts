@@ -9,6 +9,8 @@ import {
   HttpStatus,
   Req,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UpdateStudentDto } from '../studentAuth/dto/update-student.dto';
 import { Request } from 'express';
@@ -19,6 +21,7 @@ import { AuthGuard } from 'src/shared/guards';
 @ApiTags('Student')
 @Controller('student')
 @UseGuards(AuthGuard)
+@UseInterceptors(ClassSerializerInterceptor)
 export class StudentController {
   constructor(private readonly studentsService: StudentService) {}
 
@@ -32,7 +35,7 @@ export class StudentController {
   /** API Endpoint for retrieving all registered Students. */
   @Get()
   getAllStudents() {
-    return this.studentsService.findAll();
+    return this.studentsService.getAllStudents();
   }
 
   /** API Endpoint for retrieving Student information by ID. */
@@ -52,13 +55,13 @@ export class StudentController {
     return this.studentsService.updateStudent(+id, updateStudentDto);
   }
 
-  /** API Endpoint for updating Student information. */
+  /** API Endpoint for deactivating Student account. */
   @Patch(':id')
   deactivateStudent(@Param('id') id: string) {
     return this.studentsService.deactivateStudent(+id);
   }
 
-  /** API Endpoint for deactivating Student account. */
+  /** API Endpoint for deleting Student account. */
   @Delete(':id')
   deleteStudent(@Param('id') id: string) {
     return this.studentsService.deleteStudent(+id);

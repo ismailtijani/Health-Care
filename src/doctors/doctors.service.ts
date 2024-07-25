@@ -13,12 +13,22 @@ export class DoctorService {
     this.logger = new Logger(DoctorService.name);
   }
 
+  /*
+=======================================
+A Method to get A Doctor by ID
+========================================
+*/
   async getDoctor(id: number): Promise<DoctorEntity> {
     const doctor = await this.doctorRepository.findOneBy({ id });
     if (!doctor) throw new NotFoundException(`Doctor with id ${id} not found`);
     return doctor;
   }
 
+  /*
+=======================================
+A Method to get All Doctors
+========================================
+*/
   async getAllDoctors(): Promise<DoctorEntity[]> {
     return this.doctorRepository.find();
   }

@@ -12,6 +12,7 @@ import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { StudentAuthService } from './student-auth.service';
 import { StudentService } from 'src/students/students.service';
 import { EmailService } from 'src/email/email.service';
+import { RtStrategy } from 'src/shared/strategies';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { EmailService } from 'src/email/email.service';
     DoctorService,
     Reflector,
     EmailService,
+    RtStrategy,
   ],
 })
 export class StudentAuthModule {}

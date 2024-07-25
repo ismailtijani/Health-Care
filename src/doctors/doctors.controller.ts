@@ -71,7 +71,7 @@ export class DoctorController {
   }
 
   /**
-   * This endpoint is called when a user wants to reset his/her password
+   * This endpoint is called when a doctor wants to reset his/her password
    * @param resetData
    */
   @Post('password/reset')
@@ -94,18 +94,21 @@ export class DoctorController {
     );
   }
 
+  /** API Endpoint for retrieving Doctor information. */
   @Get('profile')
   @HttpCode(HttpStatus.OK)
   getDoctorProfile(@Req() req: Request) {
     return req.user;
   }
 
+  /** API Endpoint for fetching a Doctor by ID. */
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   getDoctor(@Param('id') id: number) {
     return this.doctorsService.getDoctor(id);
   }
 
+  /** API Endpoint for retrieving all registered Doctors. */
   @Get()
   @Public()
   @HttpCode(HttpStatus.OK)
