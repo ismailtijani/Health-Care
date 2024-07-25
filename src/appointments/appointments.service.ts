@@ -48,11 +48,12 @@ export class AppointmentsService {
 
     try {
       const appointment = this.appointmentRepository.create({
-        student: { id: studentId } as Student,
-        doctor: { id: doctorId } as DoctorEntity,
+        student,
+        doctor,
         appointmentDate,
         status: AppoinmentStatus.SCHEDULED,
       });
+
       return this.appointmentRepository.save(appointment);
     } catch (error) {
       throw new DatabaseExceptionFilter(error);
@@ -94,11 +95,10 @@ export class AppointmentsService {
 
     query.orderBy('appointment.appointmentDate', 'ASC');
 
-    const total = await query.getCount();
-    const appointments = await query
-      .skip((page - 1) * limit)
-      .take(limit)
-      .getMany();
+    const { 0: appointments, 1: total } = await query
+      .skip((page - 1) * limit || 0)
+      .take(limit || 10)
+      .getManyAndCount();
 
     return {
       data: appointments,
@@ -112,7 +112,7 @@ export class AppointmentsService {
   async getAppointment(id: number): Promise<Appointment> {
     const appointment = await this.appointmentRepository.findOne({
       where: { id },
-      relations: ['student', 'doctor_entity'],
+      relations: ['student', 'doctor'],
     });
     if (!appointment)
       throw new NotFoundException(`Appointment with ID ${id} not found`);

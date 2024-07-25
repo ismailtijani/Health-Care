@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsDateString,
@@ -20,7 +21,6 @@ export class CreateAppointmentDto {
 
   /** @example 2024-06-29 */
   @IsDateString()
-  @IsDate()
   appointmentDate: Date;
 
   /** @example '4:30 AM' */

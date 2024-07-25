@@ -7,6 +7,8 @@ import {
   Get,
   Query,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
@@ -16,8 +18,9 @@ import { AppointmentQueryDto } from './dto';
 import { AuthGuard } from 'src/shared/guards';
 
 @ApiTags('Appointments')
-@UseGuards(AuthGuard)
 @Controller('appointments')
+@UseGuards(AuthGuard)
+@UseInterceptors(ClassSerializerInterceptor)
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 

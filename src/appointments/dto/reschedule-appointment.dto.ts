@@ -1,19 +1,13 @@
-import {
-  IsDate,
-  IsDateString,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsDateString, IsOptional, IsString } from 'class-validator';
 
 export class RescheduleAppointmentDto {
   /** @example 2024-06-29 */
+  @IsOptional()
   @IsDateString()
-  @IsDate()
   newAppointmentDate: Date;
 
   /** @example '4:30 AM' */
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   time: string;
 

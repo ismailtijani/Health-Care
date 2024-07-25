@@ -153,7 +153,7 @@ Student Password Reset Method
       email: payload.sub,
     });
     if (
-      !student &&
+      !student ||
       (await bcrypt.compare(resetToken, student.resetPasswordToken))
     ) {
       throw new BadRequestException('Invalid Reset Password Token!!!');
@@ -162,12 +162,12 @@ Student Password Reset Method
     try {
       student.password = newPassword;
       student.resetPasswordToken = null;
-      this.studentRepository.save(student);
+      await this.studentRepository.save(student);
+      return 'Your Password has been reset successfully, Kindly login with your new password';
     } catch (error) {
       this.logger.log(JSON.stringify(error));
       throw new InternalServerErrorException();
     }
-    return 'Your Password has been reset successfully, Kindly login with your new password';
   }
 
   /*

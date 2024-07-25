@@ -151,22 +151,24 @@ Password Reset Method
     const doctor = await this.doctorRepositories.findOneBy({
       email: payload.sub,
     });
+    console.log(payload);
+    console.log(doctor);
     if (
-      !doctor &&
+      !doctor ||
       (await bcrypt.compare(resetToken, doctor.resetPasswordToken))
     ) {
       throw new BadRequestException('Invalid Reset Password Token!!!');
     }
-
+    console.log('Here  oooooooooooo');
     try {
       doctor.password = newPassword;
       doctor.resetPasswordToken = null;
-      this.doctorRepositories.save(doctor);
+      await this.doctorRepositories.save(doctor);
+      return 'Your Password has been reset successfully, Kindly login with your new password';
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
     }
-    return 'Your Password has been reset successfully, Kindly login with your new password';
   }
 
   /* 
