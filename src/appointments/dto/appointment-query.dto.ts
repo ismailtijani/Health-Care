@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import {
-  IsDate,
   IsDateString,
   IsEnum,
   IsInt,
@@ -12,7 +11,7 @@ import {
 import { AppoinmentStatus } from 'src/shared/constants';
 
 export class AppointmentQueryDto {
-  /** @example 451 */
+  /** @example 41 */
   @IsOptional()
   @IsNumber()
   studentId: number;
@@ -22,12 +21,12 @@ export class AppointmentQueryDto {
   @IsNumber()
   doctorId: number;
 
-  /** @example 2024-06-29 */
+  /** @example 2024-07-25T10:30:00.000Z */
   @IsOptional()
   @IsDateString()
   startDate: Date;
 
-  /** @example 2024-06-29 */
+  /** @example 2024-07-25T10:30:00.000Z */
   @IsOptional()
   @IsDateString()
   endDate?: string;

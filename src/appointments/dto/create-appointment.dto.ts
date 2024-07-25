@@ -1,6 +1,4 @@
-import { Type } from 'class-transformer';
 import {
-  IsDate,
   IsDateString,
   IsNotEmpty,
   IsNumber,
@@ -19,11 +17,11 @@ export class CreateAppointmentDto {
   @IsNumber()
   doctorId: number;
 
-  /** @example 2024-06-29 */
+  /** @example 2024-07-25T10:30:00.000Z */
   @IsDateString()
   appointmentDate: Date;
 
-  /** @example '4:30 AM' */
+  /** @example 10:30:45 */
   @IsNotEmpty()
   @IsString()
   time: string;

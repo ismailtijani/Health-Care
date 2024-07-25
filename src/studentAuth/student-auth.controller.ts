@@ -28,7 +28,7 @@ import { Public } from 'src/shared/decorators';
 export class StudentAuthController {
   constructor(private readonly studentAuthService: StudentAuthService) {}
 
-  // /** API Endpoint for Student Registration */
+  /** API Endpoint for Student Registration */
   @ApiBadRequestResponse()
   @Public()
   @Post('signup')

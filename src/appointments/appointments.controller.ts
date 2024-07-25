@@ -24,21 +24,25 @@ import { AuthGuard } from 'src/shared/guards';
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
+  /** API Endpoint for scheduling appoinments */
   @Post()
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentsService.create(createAppointmentDto);
   }
 
+  /** API Endpoint to fetch all appoinments */
   @Get()
   getAllAppointments(@Query() queryParams: AppointmentQueryDto) {
     return this.appointmentsService.getAllAppointments(queryParams);
   }
 
+  /** API Endpoint to fetch a single appoinment */
   @Get(':id')
   getAppointment(@Param('id') id: number) {
     return this.appointmentsService.getAppointment(id);
   }
 
+  /** API Endpoint to reschedule an appoinment */
   @Patch(':id/reschedule')
   reschedule(
     @Param('id') id: string,
@@ -47,6 +51,7 @@ export class AppointmentsController {
     return this.appointmentsService.reschedule(+id, rescheduleDto);
   }
 
+  /** API Endpoint to cancel an appoinment */
   @Patch(':id/cancel')
   cancel(@Param('id') id: string) {
     return this.appointmentsService.cancel(+id);
