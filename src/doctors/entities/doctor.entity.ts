@@ -12,6 +12,9 @@ export class DoctorEntity extends BaseEntity {
   @Column({ type: 'enum', enum: DoctorSpecialization })
   specialization: DoctorSpecialization;
 
+  @Column({ nullable: true })
+  profilePictureUrl: string;
+
   @OneToMany(() => Appointment, (appointment) => appointment.doctor)
   appointments: Appointment[];
 

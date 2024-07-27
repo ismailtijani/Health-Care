@@ -20,6 +20,7 @@ export class BaseEntity {
   @Column()
   phoneNumber: string;
 
+  @ApiHideProperty()
   @Column()
   @Exclude()
   password: string;

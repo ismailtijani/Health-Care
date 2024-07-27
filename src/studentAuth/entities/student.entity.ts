@@ -15,6 +15,9 @@ export class Student extends BaseEntity {
   @Column()
   faculty: string;
 
+  @Column({ nullable: true })
+  profilePictureUrl: string;
+
   @Column({ type: 'enum', enum: UserType, default: UserType.Student })
   userType: UserType;
 

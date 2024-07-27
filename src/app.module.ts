@@ -12,6 +12,7 @@ import { DoctorEntity } from './doctors/entities/doctor.entity';
 import { Appointment } from './appointments/entities';
 import { StudentModule } from './students/students.module';
 import { StudentAuthModule } from './studentAuth/student-auth.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { StudentAuthModule } from './studentAuth/student-auth.module';
     EmailModule,
     AdminModule,
     AppointmentsModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
