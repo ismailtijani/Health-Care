@@ -18,7 +18,9 @@ import { UploadService } from './upload.service';
 import { CurrentUser } from 'src/shared/decorators';
 import { Student } from 'src/studentAuth/entities';
 import { AuthGuard } from 'src/shared/guards';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('File Uploads')
 @Controller('upload')
 @UseGuards(AuthGuard)
 export class UploadController {
